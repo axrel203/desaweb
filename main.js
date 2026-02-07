@@ -1,4 +1,8 @@
-// Initialize AOS (Animate on Scroll)
+import 'aos/dist/aos.css';
+import './style.css';
+import AOS from 'aos';
+
+// Initialize AOS
 document.addEventListener('DOMContentLoaded', () => {
     AOS.init({
         duration: 1000,
@@ -9,21 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Header Scroll Effect
     const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.padding = '10px 0';
-            header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
-        } else {
-            header.style.padding = '20px 0';
-            header.style.boxShadow = 'none';
-        }
-    });
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.boxShadow = 'none';
+            }
+        });
+    }
 
-    // Mobile Menu (Basic implementation)
+    // Mobile Menu
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    
-    if (menuToggle) {
+
+    if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             menuToggle.classList.toggle('open');
@@ -34,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const target = document.querySelector(targetId);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
